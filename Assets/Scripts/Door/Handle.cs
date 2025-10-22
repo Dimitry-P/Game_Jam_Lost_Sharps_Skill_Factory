@@ -8,12 +8,12 @@ public class Handle : MonoBehaviour
     {
         if (opening && !isRotated)
         {
-            transform.Rotate(Vector3.forward * 45f);  // ось Z
+            transform.Rotate(Vector3.forward * -45f);  // ось Z
             isRotated = true;
         }
         else if (!opening && isRotated)
         {
-            transform.Rotate(Vector3.forward * -45f);   // возврат
+            transform.Rotate(Vector3.forward * 45f);   // возврат
             isRotated = false;
         }
     }

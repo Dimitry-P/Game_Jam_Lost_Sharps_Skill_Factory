@@ -17,12 +17,19 @@ public class DoorOpener : MonoBehaviour
     void Start()
     {
         closedRotation = doorTransform.rotation;
-        openRotation = closedRotation * Quaternion.Euler(0f, openAngle, 0f);
+        openRotation = closedRotation * Quaternion.Euler(0f, -openAngle, 0f);
     }
 
     void Update()
     {
-        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.E) && !isRotating)
+        if (isPlayerInTrigger)
+            Debug.Log("Player is in trigger zone");
+
+        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.R))
+            Debug.Log("R pressed inside trigger");
+
+
+        if (isPlayerInTrigger && Input.GetKeyDown(KeyCode.R) && !isRotating)
         {
             isRotating = true;
             isOpen = !isOpen;
@@ -52,12 +59,21 @@ public class DoorOpener : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player entered trigger");
             isPlayerInTrigger = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player exited trigger");
             isPlayerInTrigger = false;
+        }
     }
+
+    
+
 }

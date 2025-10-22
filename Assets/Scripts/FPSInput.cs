@@ -22,11 +22,12 @@ namespace Echoes_At_The_Last_Station
         private float targetCamY;
         private bool isCrouching = false;
 
-        public Transform holdPoint;  // Точка, куда игрок "держит" предмет (поставить пустой объект в руках камеры или модели)
-        public float pickupRange = 2f;  // Максимальная дистанция для поднятия
-        private GameObject heldObject = null;  // Текущий поднимаемый объект
+       
+        
+       
 
-        public event Action OnItemPickedUp;
+      
+     
 
 
         void Start()
@@ -43,7 +44,6 @@ namespace Echoes_At_The_Last_Station
         {
             HandleMovement();
             HandleCrouch();
-            HandlePickup();
         }
 
         void HandleMovement()
@@ -98,69 +98,6 @@ namespace Echoes_At_The_Last_Station
             float distance = standHeight - crouchHeight + headRoom;
 
             return !Physics.Raycast(start, Vector3.up, distance);
-        }
-
-        void HandlePickup()
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (heldObject == null)
-                {
-                    TryPickup();
-                }
-                else
-                {
-                    DropObject();
-                }
-            }
-        }
-
-        void TryPickup()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, pickupRange))
-            {
-                if (hit.collider.CompareTag("Pickup"))
-                {
-                    PickupObject(hit.collider.gameObject);
-                }
-            }
-        }
-
-
-        void PickupObject(GameObject obj)
-        {
-            heldObject = obj;
-
-            // Отключаем физику объекта, чтобы он не падал
-            Rigidbody rb = heldObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-                OnItemPickedUp?.Invoke();
-            }
-
-            // Прикрепляем к точке удержания
-            heldObject.transform.SetParent(holdPoint);
-            heldObject.transform.localPosition = Vector3.zero;
-            heldObject.transform.localRotation = Quaternion.identity;
-        }
-
-        void DropObject()
-        {
-            if (heldObject != null)
-            {
-                Rigidbody rb = heldObject.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.isKinematic = false;
-                }
-
-                heldObject.transform.SetParent(null);
-                heldObject = null;
-            }
         }
     }
 }

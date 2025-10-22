@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Ultimate Adventure 3D/Scenes/MainMenu.unity
+    guid: be9b9279b53b83843aa323019f96e462
+  - enabled: 1
+    path: Assets/Scenes/Level_1.unity
+    guid: 1d02890ac0260b04098316c32672eb34
+  - enabled: 1
+    path: Assets/Scenes/Level_2.unity
+    guid: eed3043774b2a404f8a6bcda1b69e26a
   m_configObjects: {}
